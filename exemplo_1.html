@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Situação do Aluno</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #resultado {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Verificar Situação</h2>
+
+        <label>Nome:</label>
+        <input type="text" id="nome">
+
+        <label>Nota 1:</label>
+        <input type="text" id="nota1">
+
+        <label>Nota 2:</label>
+        <input type="text" id="nota2">
+
+        <button onclick="verSituacao()">Ver Situação</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function verSituacao() {
+            const nome = document.getElementById("nome").value;
+            const n1 = parseFloat(document.getElementById("nota1").value);
+            const n2 = parseFloat(document.getElementById("nota2").value);
+
+            const media = (n1 + n2) / 2;
+
+            let situacao = "";
+
+            if (media >= 7) {
+                situacao = "Aprovado";
+            } else if (media >= 4) {
+                situacao = "Recuperação";
+            } else {
+                situacao = "Reprovado";
+            }
+
+            document.getElementById("resultado").innerHTML =
+                `${nome}, sua média é ${media.toFixed(2)} — Situação: <strong>${situacao}</strong>`;
+
+            // 🔹 LIMPAR FORMULÁRIO APÓS O CÁLCULO
+            document.getElementById("nome").value = "";
+            document.getElementById("nota1").value = "";
+            document.getElementById("nota2").value = "";
+        }
+
+    </script>
+
+</body>
+</html>
