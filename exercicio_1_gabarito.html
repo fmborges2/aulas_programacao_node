@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Situação do Aluno</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #resultado {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Verificar Situação</h2>
+
+        <label>Nome:</label>
+        <input type="text" id="nome">
+
+        <label>Nota 1:</label>
+        <input type="text" id="nota1">
+
+        <label>Nota 2:</label>
+        <input type="text" id="nota2">
+
+        <button onclick="verSituacao()">Ver Situação</button>
+
+        <div id="resultado"></div>
+
+        <h3>Lista de Alunos</h3> <ul id="listaAlunos"></ul>
+    </div>
+
+    <script>
+        // Array para armazenar todos os alunos
+        const alunos = [];
+
+        function verSituacao() {
+            const nome = document.getElementById("nome").value;
+            const n1 = Number(document.getElementById("nota1").value);
+            const n2 = Number(document.getElementById("nota2").value);
+
+            const media = (n1 + n2) / 2;
+
+            let situacao = "";
+
+            if (media >= 7) {
+                situacao = "Aprovado";
+            } else if (media >= 4) {
+                situacao = "Recuperação";
+            } else {
+                situacao = "Reprovado";
+            }
+
+            // Mostrar resultado individual
+            document.getElementById("resultado").innerHTML =
+                `${nome}, sua média é ${media.toFixed(2)} — Situação: <strong>${situacao}</strong>`;
+
+            // Adicionar aluno ao array
+            alunos.push({
+                nome: nome,
+                media: media.toFixed(2),
+                situacao: situacao
+            });
+
+            // Atualizar lista na tela
+            atualizarLista();
+
+            // Limpar campos
+            document.getElementById("nome").value = "";
+            document.getElementById("nota1").value = "";
+            document.getElementById("nota2").value = "";
+
+        }
+
+        function atualizarLista() {
+            const lista = document.getElementById("listaAlunos");
+            lista.innerHTML = ""; // limpa a lista antes de recriar
+
+            alunos.forEach(aluno => {
+                const li = document.createElement("li");
+                li.textContent = `${aluno.nome} — Média: ${aluno.media} — ${aluno.situacao}`;
+                lista.appendChild(li);
+            });
+        }
+
+
+    </script>
+
+</body>
+</html>

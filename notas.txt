@@ -1,0 +1,6 @@
+- Explicar float.toFixed(casas_decimais)
+- Exercício 2:
+    Classificação de gravidade:
+        score  <=  3,5: Nada grave
+        3.5 < score < 7.5: Moderado - Atenção
+        7.5 < score: Muito Grave - Emergência.  

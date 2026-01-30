@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Gravidade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #resultado {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .leve { color: green; }
+    .moderado { color: orange; }
+    .grave { color: red; }
+    small {
+      display: block;
+      margin-top: 10px;
+      color: #666;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Simulador de Gravidade (0 a 10)</h2>
+
+    <label>Temperatura (°C):</label>
+    <input type="number" id="temp" step="0.1">
+
+    <label>Glicemia (mg/dL):</label>
+    <input type="number" id="glicemia">
+
+    <label>Colesterol (mg/dL):</label>
+    <input type="number" id="colesterol">
+
+    <label>Triglicerídeos (mg/dL):</label>
+    <input type="number" id="triglicerideos">
+
+    <button onclick="calcularScore()">Calcular Score</button>
+
+    <div id="resultado"></div>
+
+    <small>
+      Este simulador é apenas didático, não substitui avaliação médica real.
+    </small>
+  </div>
+
+  <script>
+    function calcularScore() {
+      const temp = Number(document.getElementById("temp").value) || 0;
+      const glic = Number(document.getElementById("glicemia").value) || 0;
+      const col = Number(document.getElementById("colesterol").value) || 0;
+      const trig = Number(document.getElementById("triglicerideos").value) || 0;
+
+      // Pesos (apenas exemplo didático)
+      const pTemp = 3;
+      const pGlic = 3;
+      const pCol = 2;
+      const pTrig = 2;
+      const somaPesos = pTemp + pGlic + pCol + pTrig;
+
+      // Normalização bem simples para 0–10 (apenas para simulação)
+      // Aqui estou dividindo cada valor por um "limite" arbitrário
+      const normTemp = temp / 42;          // supondo 42°C como extremo
+      const normGlic = glic / 400;        // 400 mg/dL como extremo
+      const normCol = col / 400;          // 400 mg/dL como extremo
+      const normTrig = trig / 500;        // 500 mg/dL como extremo
+
+      let mediaPonderada =
+        (normTemp * pTemp +
+         normGlic * pGlic +
+         normCol * pCol +
+         normTrig * pTrig) / somaPesos;
+
+      // Garante que fique entre 0 e 1
+      if (mediaPonderada < 0) mediaPonderada = 0;
+      if (mediaPonderada > 1) mediaPonderada = 1;
+
+      const score = (mediaPonderada * 10).toFixed(1);
+
+      let classificacao = "";
+      let classe = "";
+
+      if (score < 3.5) {
+        classificacao = "Nada grave / Leve";
+        classe = "leve";
+      } else if (score < 7.5) {
+        classificacao = "Moderado / Atenção";
+        classe = "moderado";
+      } else {
+        classificacao = "Emergência / Muito grave";
+        classe = "grave";
+      }
+
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.className = classe;
+      resultadoDiv.innerHTML = `Score: ${score} — ${classificacao}`;
+    }
+  </script>
+</body>
+</html>
