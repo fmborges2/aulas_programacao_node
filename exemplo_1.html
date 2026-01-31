@@ -73,8 +73,8 @@
     <script>
         function verSituacao() {
             const nome = document.getElementById("nome").value;
-            const n1 = parseFloat(document.getElementById("nota1").value);
-            const n2 = parseFloat(document.getElementById("nota2").value);
+            const n1 = Number(document.getElementById("nota1").value);
+            const n2 = Number(document.getElementById("nota2").value);
 
             const media = (n1 + n2) / 2;
 
