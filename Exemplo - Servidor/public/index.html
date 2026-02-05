@@ -1,0 +1,39 @@
+<h2>Criar Usuário</h2>
+<input id="nome" placeholder="Nome">
+<input id="telefone" placeholder="Telefone">
+<input id="idade" type="number" placeholder="Idade">
+<input id="email" placeholder="E-mail">
+<button onclick="criar()">Criar</button>
+
+<h2>Usuários</h2>
+<button onclick="listar()">Listar</button>
+<pre id="saida"></pre>
+
+<script>
+const API = "http://localhost:3000/usuarios";
+
+// CREATE
+async function criar() {
+    const usuario = {
+        nome: nome.value,
+        telefone: telefone.value,
+        idade: idade.value,
+        email: email.value
+    };
+
+    await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(usuario)
+    });
+
+    listar();
+}
+
+// READ
+async function listar() {
+    const resposta = await fetch(API);
+    const dados = await resposta.json();
+    saida.textContent = JSON.stringify(dados, null, 2);
+}
+</script>
